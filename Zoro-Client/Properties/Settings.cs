@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System.Linq;
+using System.Net;
 using Zoro;
 using Zoro.Network.P2P;
 
@@ -11,6 +12,8 @@ namespace Zoro_Client.Properties
         public P2PSettings P2P { get; }
         public BrowserSettings Urls { get; }
         public ContractSettings Contracts { get; }
+        public string PluginURL { get; }
+        public RPCSettings RPC { get; }
 
         public Settings()
         {
@@ -25,18 +28,21 @@ namespace Zoro_Client.Properties
             this.P2P = new P2PSettings(section.GetSection("P2P"));
             this.Urls = new BrowserSettings(section.GetSection("Urls"));
             this.Contracts = new ContractSettings(section.GetSection("Contracts"));
+            this.RPC = new RPCSettings(section.GetSection("RPC"));
+            this.PluginURL = section.GetSection("PluginURL").Value;
         }
     }
 
     internal class PathsSettings
     {
         public string Chain { get; }
-        public string CertCache { get; }
+
+        public string RelativePath { get; }
 
         public PathsSettings(IConfigurationSection section)
         {
             this.Chain = string.Format(section.GetSection("Chain").Value, Message.Magic.ToString("X8"));
-            this.CertCache = section.GetSection("CertCache").Value;
+            this.RelativePath = section.GetSection("RelativePath")?.Value ?? "";
         }
     }
 
@@ -73,6 +79,25 @@ namespace Zoro_Client.Properties
         public ContractSettings(IConfigurationSection section)
         {
             this.NEP5 = section.GetSection("NEP5").GetChildren().Select(p => UInt160.Parse(p.Value)).ToArray();
+        }
+    }
+
+    internal class RPCSettings
+    {
+        public IPAddress BindAddress { get; }
+        public ushort Port { get; }
+        public string SslCert { get; }
+        public string SslCertPassword { get; }
+
+        public bool IsActive { get; }
+
+        public RPCSettings(IConfigurationSection section)
+        {
+            this.BindAddress = IPAddress.Parse(section.GetSection("BindAddress").Value);
+            this.Port = ushort.Parse(section.GetSection("Port").Value);
+            this.SslCert = section.GetSection("SslCert").Value;
+            this.SslCertPassword = section.GetSection("SslCertPassword").Value;
+            this.IsActive = bool.Parse(section.GetSection("IsActive").Value);
         }
     }
 }

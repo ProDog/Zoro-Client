@@ -28,25 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label2 = new System.Windows.Forms.Label();
+            this.components = new System.ComponentModel.Container();
             this.lblAddress = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lblBcp = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.lblBct = new System.Windows.Forms.Label();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.查看私钥VToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.复制到剪贴板CToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.删除DToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("微软雅黑", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label2.Location = new System.Drawing.Point(3, 8);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(73, 20);
-            this.label2.TabIndex = 20;
-            this.label2.Text = "Address:";
             // 
             // lblAddress
             // 
@@ -54,7 +47,7 @@
             this.lblAddress.Font = new System.Drawing.Font("微软雅黑", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lblAddress.ForeColor = System.Drawing.Color.DodgerBlue;
             this.lblAddress.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblAddress.Location = new System.Drawing.Point(82, 8);
+            this.lblAddress.Location = new System.Drawing.Point(3, 8);
             this.lblAddress.Name = "lblAddress";
             this.lblAddress.Size = new System.Drawing.Size(330, 20);
             this.lblAddress.TabIndex = 21;
@@ -76,6 +69,7 @@
             // lblBcp
             // 
             this.lblBcp.AutoSize = true;
+            this.lblBcp.ContextMenuStrip = this.contextMenuStrip1;
             this.lblBcp.Font = new System.Drawing.Font("微软雅黑", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lblBcp.ForeColor = System.Drawing.Color.DodgerBlue;
             this.lblBcp.ImeMode = System.Windows.Forms.ImeMode.NoControl;
@@ -109,33 +103,70 @@
             this.lblBct.TabIndex = 25;
             this.lblBct.Text = "00000000.000000";
             // 
-            // Account
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.contextMenuStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.查看私钥VToolStripMenuItem,
+            this.复制到剪贴板CToolStripMenuItem,
+            this.删除DToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(177, 70);
+            // 
+            // 查看私钥VToolStripMenuItem
+            // 
+            this.查看私钥VToolStripMenuItem.Name = "查看私钥VToolStripMenuItem";
+            this.查看私钥VToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.查看私钥VToolStripMenuItem.Text = "View &Private Key";
+            this.查看私钥VToolStripMenuItem.Click += new System.EventHandler(this.查看私钥VToolStripMenuItem_Click);
+            // 
+            // 复制到剪贴板CToolStripMenuItem
+            // 
+            this.复制到剪贴板CToolStripMenuItem.Name = "复制到剪贴板CToolStripMenuItem";
+            this.复制到剪贴板CToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.复制到剪贴板CToolStripMenuItem.ShowShortcutKeys = false;
+            this.复制到剪贴板CToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.复制到剪贴板CToolStripMenuItem.Text = "&Copy to Clipboard";
+            this.复制到剪贴板CToolStripMenuItem.Click += new System.EventHandler(this.复制到剪贴板CToolStripMenuItem_Click);
+            // 
+            // 删除DToolStripMenuItem
+            // 
+            this.删除DToolStripMenuItem.Name = "删除DToolStripMenuItem";
+            this.删除DToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.删除DToolStripMenuItem.Text = "&Delete...";
+            this.删除DToolStripMenuItem.Click += new System.EventHandler(this.删除DToolStripMenuItem_Click);
+            // 
+            // AccountFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ContextMenuStrip = this.contextMenuStrip1;
             this.Controls.Add(this.lblBct);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.lblBcp);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lblAddress);
-            this.Controls.Add(this.label2);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.ForeColor = System.Drawing.Color.DodgerBlue;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.Name = "Account";
+            this.Name = "AccountFrm";
             this.Size = new System.Drawing.Size(825, 39);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblAddress;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblBcp;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblBct;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem 查看私钥VToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 复制到剪贴板CToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 删除DToolStripMenuItem;
     }
 }

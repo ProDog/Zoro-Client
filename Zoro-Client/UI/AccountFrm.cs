@@ -5,22 +5,29 @@ using Zoro.Ledger;
 using Neo.VM;
 using Zoro.Network.RPC;
 using Newtonsoft.Json.Linq;
+using Zoro.Wallets;
+using System.Runtime.InteropServices;
+using Zoro_Client.Properties;
+using System.Linq;
+using Zoro.Wallets.NEP6;
 
 namespace Zoro_Client.UI
 {
     public partial class AccountFrm : UserControl
     {
         public string Address;
+        public WalletAccount Account;
         private RpcHandler handler = new RpcHandler();
         public AccountFrm()
         {
             InitializeComponent();
         }
-        public AccountFrm(string address)
+        public AccountFrm(WalletAccount account)
         {
             InitializeComponent();
-            lblAddress.Text = address;
-            Address = address;
+            Account = account;
+            lblAddress.Text = account.Address;
+            Address = account.Address;
         }
 
         private void LblAddress_TextChanged(object sender, EventArgs e)
@@ -106,6 +113,35 @@ namespace Zoro_Client.UI
             }
 
             return result;
+        }
+
+        private void 查看私钥VToolStripMenuItem_Click(object sender, EventArgs e)
+        {            
+            using (ViewPrivateKeyDialog dialog = new ViewPrivateKeyDialog(Account))
+            {
+                dialog.ShowDialog();
+            }
+        }
+
+        private void 复制到剪贴板CToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Clipboard.SetText(Address);
+            }
+            catch (ExternalException) { }
+        }
+
+        private void 删除DToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show(Strings.DeleteAddressConfirmationMessage, Strings.DeleteAddressConfirmationCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+                return;
+
+            Program.Wallet.DeleteAccount(Account.ScriptHash);
+            
+            if (Program.Wallet is NEP6Wallet wallet)
+                wallet.Save();
+            this.Dispose();
         }
     }
 

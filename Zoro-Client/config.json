@@ -1,0 +1,19 @@
+﻿{
+  "ApplicationConfiguration": {
+    "Paths": {
+      "Chain": "Chain_{0}"
+    },
+    "P2P": {
+      "Port": 20065,
+      "WsPort": 20075
+    },
+    "RPC": {
+      "BindAddress": "127.0.0.1",
+      "Port": 20333,
+      "SslCert": "",
+      "SslCertPassword": "",
+      "IsActive": false
+    },
+    "PluginURL": "https://github.com/ZoroChain/Zoro-Plugins/releases/download/v{1}/{0}.zip"
+  }
+}

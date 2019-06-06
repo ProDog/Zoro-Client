@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -46,7 +47,6 @@
             this.创建钱包数据库NToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.打开钱包数据库OToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.修改密码CToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.退出XToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.交易TToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,13 +63,20 @@
             this.关于AntSharesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.创建新地址NToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.导入私钥IToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importWIFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importCertificateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.importWatchOnlyAddressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.accountFrm1 = new Zoro_Client.UI.AccountFrm();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -84,10 +91,10 @@
             this.toolStripStatusLabel2,
             this.toolStripStatusLabel3});
             this.statusStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.statusStrip1.Location = new System.Drawing.Point(0, 417);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 361);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(839, 26);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 17, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(734, 23);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
@@ -95,25 +102,25 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(49, 21);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(49, 18);
             this.toolStripStatusLabel1.Text = "Height:";
             // 
             // lbl_height
             // 
             this.lbl_height.Name = "lbl_height";
-            this.lbl_height.Size = new System.Drawing.Size(39, 21);
-            this.lbl_height.Text = "0/0/0";
+            this.lbl_height.Size = new System.Drawing.Size(27, 18);
+            this.lbl_height.Text = "0/0";
             // 
             // toolStripStatusLabel4
             // 
             this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
-            this.toolStripStatusLabel4.Size = new System.Drawing.Size(73, 21);
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(73, 18);
             this.toolStripStatusLabel4.Text = "Connected:";
             // 
             // lbl_count_node
             // 
             this.lbl_count_node.Name = "lbl_count_node";
-            this.lbl_count_node.Size = new System.Drawing.Size(15, 21);
+            this.lbl_count_node.Size = new System.Drawing.Size(15, 18);
             this.lbl_count_node.Text = "0";
             // 
             // toolStripProgressBar1
@@ -122,21 +129,21 @@
             this.toolStripProgressBar1.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.toolStripProgressBar1.Maximum = 15;
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(133, 20);
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(116, 17);
             this.toolStripProgressBar1.Step = 1;
             // 
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(140, 21);
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(140, 18);
             this.toolStripStatusLabel2.Text = "Waiting for next block:";
             // 
             // toolStripStatusLabel3
             // 
             this.toolStripStatusLabel3.IsLink = true;
             this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(145, 21);
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(145, 18);
             this.toolStripStatusLabel3.Text = "Download New Version";
             this.toolStripStatusLabel3.Visible = false;
             // 
@@ -174,8 +181,8 @@
             this.帮助HToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 4, 0, 4);
-            this.menuStrip1.Size = new System.Drawing.Size(839, 32);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 3, 0, 3);
+            this.menuStrip1.Size = new System.Drawing.Size(734, 30);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -186,7 +193,6 @@
             this.创建钱包数据库NToolStripMenuItem,
             this.打开钱包数据库OToolStripMenuItem,
             this.toolStripSeparator1,
-            this.修改密码CToolStripMenuItem,
             this.toolStripSeparator2,
             this.退出XToolStripMenuItem});
             this.钱包WToolStripMenuItem.Name = "钱包WToolStripMenuItem";
@@ -211,14 +217,6 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(235, 6);
-            // 
-            // 修改密码CToolStripMenuItem
-            // 
-            this.修改密码CToolStripMenuItem.Enabled = false;
-            this.修改密码CToolStripMenuItem.Name = "修改密码CToolStripMenuItem";
-            this.修改密码CToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
-            this.修改密码CToolStripMenuItem.Text = "&Change Password...";
-            this.修改密码CToolStripMenuItem.Click += new System.EventHandler(this.修改密码CToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -322,80 +320,127 @@
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tabControl1.Location = new System.Drawing.Point(0, 32);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
+            this.tabControl1.Location = new System.Drawing.Point(0, 30);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(839, 385);
+            this.tabControl1.Size = new System.Drawing.Size(734, 331);
             this.tabControl1.TabIndex = 5;
             // 
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.White;
-            this.tabPage1.Controls.Add(this.accountFrm1);
+            this.tabPage1.ContextMenuStrip = this.contextMenuStrip1;
             this.tabPage1.Location = new System.Drawing.Point(4, 28);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage1.Size = new System.Drawing.Size(831, 353);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabPage1.Size = new System.Drawing.Size(726, 299);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Account";
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.创建新地址NToolStripMenuItem,
+            this.导入私钥IToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(176, 48);
+            // 
+            // 创建新地址NToolStripMenuItem
+            // 
+            this.创建新地址NToolStripMenuItem.Name = "创建新地址NToolStripMenuItem";
+            this.创建新地址NToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.创建新地址NToolStripMenuItem.Text = "Create &New Add.";
+            this.创建新地址NToolStripMenuItem.Click += new System.EventHandler(this.创建新地址NToolStripMenuItem_Click);
+            // 
+            // 导入私钥IToolStripMenuItem
+            // 
+            this.导入私钥IToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.importWIFToolStripMenuItem,
+            this.importCertificateToolStripMenuItem,
+            this.toolStripSeparator10,
+            this.importWatchOnlyAddressToolStripMenuItem});
+            this.导入私钥IToolStripMenuItem.Name = "导入私钥IToolStripMenuItem";
+            this.导入私钥IToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.导入私钥IToolStripMenuItem.Text = "&Import";
+            // 
+            // importWIFToolStripMenuItem
+            // 
+            this.importWIFToolStripMenuItem.Name = "importWIFToolStripMenuItem";
+            this.importWIFToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
+            this.importWIFToolStripMenuItem.Text = "Import from &WIF...";
+            this.importWIFToolStripMenuItem.Click += new System.EventHandler(this.ImportWIFToolStripMenuItem_Click);
+            // 
+            // importCertificateToolStripMenuItem
+            // 
+            this.importCertificateToolStripMenuItem.Name = "importCertificateToolStripMenuItem";
+            this.importCertificateToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
+            this.importCertificateToolStripMenuItem.Text = "Import from &Certificate...";
+            this.importCertificateToolStripMenuItem.Click += new System.EventHandler(this.ImportCertificateToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(245, 6);
+            // 
+            // importWatchOnlyAddressToolStripMenuItem
+            // 
+            this.importWatchOnlyAddressToolStripMenuItem.Name = "importWatchOnlyAddressToolStripMenuItem";
+            this.importWatchOnlyAddressToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
+            this.importWatchOnlyAddressToolStripMenuItem.Text = "Import Watch-Only &Address...";
+            this.importWatchOnlyAddressToolStripMenuItem.Click += new System.EventHandler(this.ImportWatchOnlyAddressToolStripMenuItem_Click);
+            // 
             // tabPage2
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.White;
             this.tabPage2.Location = new System.Drawing.Point(4, 28);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage2.Size = new System.Drawing.Size(831, 353);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(726, 299);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Asset";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // tabPage3
             // 
-            this.tabPage3.BackColor = System.Drawing.Color.White;
             this.tabPage3.Location = new System.Drawing.Point(4, 28);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage3.Size = new System.Drawing.Size(831, 353);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(726, 299);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Contract";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // accountFrm1
+            // timer1
             // 
-            this.accountFrm1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.accountFrm1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.accountFrm1.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.accountFrm1.Location = new System.Drawing.Point(4, 4);
-            this.accountFrm1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.accountFrm1.Name = "accountFrm1";
-            this.accountFrm1.Size = new System.Drawing.Size(823, 39);
-            this.accountFrm1.TabIndex = 0;
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 500;
+            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(839, 443);
+            this.ClientSize = new System.Drawing.Size(734, 384);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.statusStrip1);
-            this.Font = new System.Drawing.Font("宋体", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Zoro-Client";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -420,7 +465,6 @@
         private System.Windows.Forms.ToolStripMenuItem 创建钱包数据库NToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 打开钱包数据库OToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem 修改密码CToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem 退出XToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 交易TToolStripMenuItem;
@@ -436,15 +480,17 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem 关于AntSharesToolStripMenuItem;
         private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem 创建新地址NToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 导入私钥IToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importWIFToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importCertificateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripMenuItem importWatchOnlyAddressToolStripMenuItem;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
-        private AccountFrm account5;
-        private AccountFrm account4;
-        private AccountFrm account3;
-        private AccountFrm account2;
-        private AccountFrm account1;
-        private AccountFrm accountFrm1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

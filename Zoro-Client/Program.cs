@@ -17,7 +17,7 @@ namespace Zoro_Client
 {
     static class Program
     {
-        public static LocalNode LocalNode;
+        public static MainService MainService;
         public static Wallet Wallet;
         public static MainForm MainForm;
 
@@ -59,9 +59,8 @@ namespace Zoro_Client
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
+            MainService = new MainService();
             Application.Run(MainForm = new MainForm());
-            
         }
 
     }

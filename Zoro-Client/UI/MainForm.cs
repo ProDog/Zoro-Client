@@ -5,12 +5,14 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Zoro;
 using Zoro.Ledger;
+using Zoro.Network.P2P;
 using Zoro.Persistence.LevelDB;
 using Zoro.Wallets;
 using Zoro.Wallets.NEP6;
@@ -19,17 +21,10 @@ using Zoro_Client.Properties;
 namespace Zoro_Client.UI
 {
     public partial class MainForm : Form
-    {
-        private const string PeerStatePath = "peers.dat";
-
-        private LevelDBStore store;
-        private ZoroChainSystem system;
-        private AppChainService appchainService;
-
+    {       
         public MainForm()
         {
             InitializeComponent();
-            appchainService = new AppChainService();
         }        
 
         private void 创建钱包数据库NToolStripMenuItem_Click(object sender, EventArgs e)
@@ -37,6 +32,10 @@ namespace Zoro_Client.UI
             using (CreateWalletDialog dialog = new CreateWalletDialog())
             {
                 if (dialog.ShowDialog() != DialogResult.OK) return;
+
+                LoadingFrm loadingFrm = new LoadingFrm("Creating...");
+                SplashScreen.Show(loadingFrm);
+
                 NEP6Wallet wallet = new NEP6Wallet(dialog.WalletPath, null);
                 wallet.Unlock(dialog.Password);
                 WalletAccount account = wallet.CreateAccount();
@@ -45,7 +44,9 @@ namespace Zoro_Client.UI
                 Settings.Default.Save();
 
                 Program.Wallet = wallet;
-                ZoroChainSystem.Singleton.SetWallet(Program.Wallet);
+                //ZoroChainSystem.Singleton.SetWallet(Program.Wallet);
+
+                SplashScreen.Close();
             }
 
         }
@@ -64,6 +65,9 @@ namespace Zoro_Client.UI
                 if (dialog.ShowDialog() != DialogResult.OK) return;
                 string path = dialog.WalletPath;
 
+                LoadingFrm loadingFrm = new LoadingFrm("Opening...");
+                SplashScreen.Show(loadingFrm);
+
                 NEP6Wallet nep6wallet = new NEP6Wallet(dialog.WalletPath, null);
                 try
                 {
@@ -80,6 +84,8 @@ namespace Zoro_Client.UI
                 Settings.Default.Save();
 
                 ChangeWallet(Program.Wallet);
+
+                SplashScreen.Close();
             }
         }
 
@@ -95,35 +101,165 @@ namespace Zoro_Client.UI
                 if (Program.Wallet is IDisposable disposable)
                     disposable.Dispose();
             }
+
             Program.Wallet = wallet;
 
-            if (Program.Wallet != null)
-            {
-            }
+            //修改密码CToolStripMenuItem.Enabled = Program.Wallet is Wallet;
+            交易TToolStripMenuItem.Enabled = Program.Wallet != null;
+            
+            //创建新地址NToolStripMenuItem.Enabled = Program.Wallet != null;
+            //导入私钥IToolStripMenuItem.Enabled = Program.Wallet != null;            
         }
 
-        private void AddAccount(WalletAccount account, bool selected = false)
+        private void AddAccount(WalletAccount account)
         {
-            AccountFrm accountFrm = new AccountFrm(account.Address);
+            AccountFrm accountFrm = new AccountFrm(account);
             accountFrm.Parent = tabPage1;
-            accountFrm.Dock = DockStyle.Top;
-        }
-
-        private void 退出XToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Close();
+            accountFrm.Dock = DockStyle.Top;         
         }
 
         private void 修改密码CToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //using (ChangePasswordDialog dialog = new ChangePasswordDialog())
+            //using (ChangePasswordFrm dialog = new ChangePasswordFrm())
             //{
             //    if (dialog.ShowDialog() != DialogResult.OK) return;
-            //    if (((UserWallet)Program.CurrentWallet).ChangePassword(dialog.OldPassword, dialog.NewPassword))
+            //    if (((NEP6Wallet)Program.Wallet)(dialog.OldPassword, dialog.NewPassword))
             //        MessageBox.Show(Strings.ChangePasswordSuccessful);
             //    else
             //        MessageBox.Show(Strings.PasswordIncorrect);
             //}
+        }
+
+        private void 创建新地址NToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoadingFrm loadingFrm = new LoadingFrm("Creating...");
+            SplashScreen.Show(loadingFrm);
+            WalletAccount account = Program.Wallet.CreateAccount();
+            AddAccount(account);
+            if (Program.Wallet is NEP6Wallet wallet)
+                wallet.Save();
+            SplashScreen.Close();
+        }
+
+        private void ImportWIFToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (ImportPrivateKeyDialog dialog = new ImportPrivateKeyDialog())
+            {
+                if (dialog.ShowDialog() != DialogResult.OK) return;
+                foreach (string wif in dialog.WifStrings)
+                {
+                    WalletAccount account;
+                    try
+                    {
+                        account = Program.Wallet.Import(wif);
+                    }
+                    catch (FormatException)
+                    {
+                        continue;
+                    }
+                    AddAccount(account);
+                }
+                if (Program.Wallet is NEP6Wallet wallet)
+                    wallet.Save();
+            }
+        }        
+
+        private void ImportCertificateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //using (SelectCertificateDialog dialog = new SelectCertificateDialog())
+            //{
+            //    if (dialog.ShowDialog() != DialogResult.OK) return;
+            //    listView1.SelectedIndices.Clear();
+            //    WalletAccount account = Program.CurrentWallet.Import(dialog.SelectedCertificate);
+            //    AddAccount(account, true);
+            //    if (Program.CurrentWallet is NEP6Wallet wallet)
+            //        wallet.Save();
+            //}
+        }
+
+        private void ImportWatchOnlyAddressToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //string text = InputBox.Show(Strings.Address, Strings.ImportWatchOnlyAddress);
+            //if (string.IsNullOrEmpty(text)) return;
+            //using (StringReader reader = new StringReader(text))
+            //{
+            //    while (true)
+            //    {
+            //        string address = reader.ReadLine();
+            //        if (address == null) break;
+            //        address = address.Trim();
+            //        if (string.IsNullOrEmpty(address)) continue;
+            //        UInt160 scriptHash;
+            //        try
+            //        {
+            //            scriptHash = Wallet.ToScriptHash(address);
+            //        }
+            //        catch (FormatException)
+            //        {
+            //            continue;
+            //        }
+            //        WalletAccount account = Program.CurrentWallet.CreateAccount(scriptHash);
+            //        AddAccount(account, true);
+            //    }
+            //}
+            //if (Program.CurrentWallet is NEP6Wallet wallet)
+            //    wallet.Save();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {            
+            Program.MainService.Run();            
+        }
+
+        private void ShowState()
+        {
+            Blockchain blockchain = LocalNode.Root.Blockchain;
+
+            lbl_height.Text = $"{blockchain.Height}/{blockchain.HeaderHeight}";
+
+            Console.WriteLine($"block:{blockchain.Name} {blockchain.ChainHash.ToString()} {blockchain.Height}/{blockchain.HeaderHeight}  connected: {LocalNode.Root.ConnectedCount}  unconnected: {LocalNode.Root.UnconnectedCount}  mempool:{blockchain.GetMemoryPoolCount()}");
+
+            foreach (RemoteNode node in LocalNode.Root.GetRemoteNodes())
+            {
+                Console.WriteLine($"  ip: {node.Remote.Address}\tport: {node.Remote.Port}\tlisten: {node.ListenerPort}\theight: {node.Height}\tlatency: {node.Latency}");
+            }
+
+        }
+
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            DateTime persistence_time = LocalNode.Root.Blockchain.Height.ToDateTime();
+            Blockchain blockchain = LocalNode.Root.Blockchain;
+
+            lbl_height.Text = $"{blockchain.Height}/{blockchain.HeaderHeight}";
+
+            lbl_count_node.Text = LocalNode.Root.ConnectedCount.ToString();
+
+            TimeSpan persistence_span = DateTime.UtcNow - persistence_time;
+            if (persistence_span < TimeSpan.Zero) persistence_span = TimeSpan.Zero;
+            if (persistence_span > Blockchain.TimePerBlock)
+            {
+                toolStripProgressBar1.Style = ProgressBarStyle.Marquee;
+            }
+            else
+            {
+                toolStripProgressBar1.Value = persistence_span.Seconds;
+                toolStripProgressBar1.Style = ProgressBarStyle.Blocks;
+            }
+        }
+
+        private void 退出XToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Program.MainService.OnStop();
+            ChangeWallet(null);
+            Close();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Program.MainService.OnStop();
+            ChangeWallet(null);
+            Close();
         }
     }
 }
