@@ -10,6 +10,9 @@ using System.Runtime.InteropServices;
 using Zoro_Client.Properties;
 using System.Linq;
 using Zoro.Wallets.NEP6;
+using Zoro.Network.P2P;
+using Zoro.SmartContract;
+using System.Drawing;
 
 namespace Zoro_Client.UI
 {
@@ -28,16 +31,18 @@ namespace Zoro_Client.UI
             Account = account;
             lblAddress.Text = account.Address;
             Address = account.Address;
+            GetBalance();
         }
 
-        private void LblAddress_TextChanged(object sender, EventArgs e)
+        public void RefreshBalance()
         {
-            Address = lblAddress.Text;
             GetBalance();
         }
 
         private void GetBalance()
         {
+            Blockchain blockchain = LocalNode.Root.Blockchain;
+
             UInt160 addressHash= ZoroHelper.GetPublicKeyHashFromAddress(Address);
             try
             {
@@ -47,15 +52,30 @@ namespace Zoro_Client.UI
                 using (ScriptBuilder sb = new ScriptBuilder())
                 {
                     sb.EmitSysCall("Zoro.NativeNEP5.Call", "BalanceOf", bcpAssetId, addressHash);
-                    sb.EmitSysCall("Zoro.NativeNEP5.Call", "Decimals", bcpAssetId);
+                    //sb.EmitSysCall("Zoro.NativeNEP5.Call", "Decimals", bcpAssetId);
 
-                    var script = sb.ToArray().ToHexString();
-                    Zoro.IO.Json.JArray _params = new Zoro.IO.Json.JArray();
-                    _params.Add("");
-                    _params.Add(script);
+                    //var script = sb.ToArray().ToHexString();
+                    //Zoro.IO.Json.JArray _params = new Zoro.IO.Json.JArray();
+                    //_params.Add("");
+                    //_params.Add(script);
 
-                    var info = handler.Process("invokescript", _params);
-                    var value = GetBalanceFromJson(info.ToString());
+                    var script = sb.ToArray();
+                    ApplicationEngine engine = ApplicationEngine.Run(script, blockchain, testMode: true);
+                    Zoro.IO.Json.JObject json = new Zoro.IO.Json.JObject();
+                    json["script"] = script.ToHexString();
+                    json["state"] = engine.State;
+                    json["gas_consumed"] = engine.GasConsumed.ToString();
+                    try
+                    {
+                        json["stack"] = new Zoro.IO.Json.JArray(engine.ResultStack.Select(p => p.ToParameter().ToJson()));
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        json["stack"] = "error: recursive reference";
+                    }
+
+                    //var info = handler.Process("invokescript", _params);
+                    var value = GetBalanceFromJson(json.ToString());
 
                     lblBcp.Text = value;
 
@@ -64,15 +84,30 @@ namespace Zoro_Client.UI
                 using (ScriptBuilder sb = new ScriptBuilder())
                 {
                     sb.EmitSysCall("Zoro.NativeNEP5.Call", "BalanceOf", bctAssetId, addressHash);
-                    sb.EmitSysCall("Zoro.NativeNEP5.Call", "Decimals", bctAssetId);
+                    //sb.EmitSysCall("Zoro.NativeNEP5.Call", "Decimals", bctAssetId);
 
-                    var script = sb.ToArray().ToHexString();
-                    Zoro.IO.Json.JArray _params = new Zoro.IO.Json.JArray();
-                    _params.Add("");
-                    _params.Add(script);
+                    //var script = sb.ToArray().ToHexString();
+                    //Zoro.IO.Json.JArray _params = new Zoro.IO.Json.JArray();
+                    //_params.Add("");
+                    //_params.Add(script);
 
-                    var info = handler.Process("invokescript", _params);
-                    var value = GetBalanceFromJson(info.ToString());
+                    var script = sb.ToArray();
+                    ApplicationEngine engine = ApplicationEngine.Run(script, blockchain, testMode: true);
+                    Zoro.IO.Json.JObject json = new Zoro.IO.Json.JObject();
+                    json["script"] = script.ToHexString();
+                    json["state"] = engine.State;
+                    json["gas_consumed"] = engine.GasConsumed.ToString();
+                    try
+                    {
+                        json["stack"] = new Zoro.IO.Json.JArray(engine.ResultStack.Select(p => p.ToParameter().ToJson()));
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        json["stack"] = "error: recursive reference";
+                    }
+
+                    //var info = handler.Process("invokescript", _params);
+                    var value = GetBalanceFromJson(json.ToString());
 
                     lblBct.Text = value;
 
@@ -91,25 +126,15 @@ namespace Zoro_Client.UI
             string result = "";
             JObject json = JObject.Parse(info);
 
-            if (json.ContainsKey("result"))
-            {
-                JObject json_result = json["result"] as JObject;
-                JArray stack = json_result["stack"] as JArray;
+            JArray stack = json["stack"] as JArray;
 
-                if (stack != null && stack.Count >= 2)
-                {
-                    string balance = ZoroHelper.GetJsonValue(stack[0] as JObject);
-                    string decimals = ZoroHelper.GetJsonValue(stack[1] as JObject);
-
-                    Decimal value = Decimal.Parse(balance) / new Decimal(Math.Pow(10, int.Parse(decimals)));
-                    string fmt = "{0:N" + decimals + "}";
-                    result = string.Format(fmt, value);
-                }
-            }
-            else if (json.ContainsKey("error"))
+            if (stack != null && stack.Count > 0)
             {
-                JObject json_error_obj = json["error"] as JObject;
-                result = json_error_obj.ToString();
+                string balance = ZoroHelper.GetJsonValue(stack[0] as JObject);
+
+                Decimal value = Decimal.Parse(balance) / new Decimal(Math.Pow(10, 8));
+                string fmt = "{0:N" + 8 + "}";
+                result = string.Format(fmt, value);
             }
 
             return result;
@@ -142,8 +167,16 @@ namespace Zoro_Client.UI
             if (Program.Wallet is NEP6Wallet wallet)
                 wallet.Save();
             this.Dispose();
-        }
-    }
+        }               
 
+        private void AccountFrm_DoubleClick(object sender, EventArgs e)
+        {
+            using (ViewPrivateKeyDialog dialog = new ViewPrivateKeyDialog(Account))
+            {
+                dialog.ShowDialog();
+            }
+        }
+
+    }
 
 }

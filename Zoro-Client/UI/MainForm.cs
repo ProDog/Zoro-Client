@@ -77,13 +77,17 @@ namespace Zoro_Client.UI
                 {
                     MessageBox.Show(Strings.PasswordIncorrect);
                     return;
-                }
-                Program.Wallet = nep6wallet;
+                }               
 
                 Settings.Default.LastWalletPath = path;
                 Settings.Default.Save();
 
-                ChangeWallet(Program.Wallet);
+                ChangeWallet(nep6wallet);
+
+                Program.Wallet = nep6wallet;
+
+                //修改密码CToolStripMenuItem.Enabled = Program.Wallet is Wallet;
+                交易TToolStripMenuItem.Enabled = Program.Wallet != null; 
 
                 SplashScreen.Close();
             }
@@ -92,31 +96,27 @@ namespace Zoro_Client.UI
         private void ChangeWallet(Wallet wallet)
         {
             if (Program.Wallet != null)
+                tabPage1.Controls.Clear();
+
+            if (wallet != null)
             {
-                foreach (WalletAccount account in Program.Wallet.GetAccounts().ToArray())
+                foreach (WalletAccount account in wallet.GetAccounts().ToArray())
                 {
                     AddAccount(account);
                 }
 
-                if (Program.Wallet is IDisposable disposable)
+                if (wallet is IDisposable disposable)
                     disposable.Dispose();
             }
-
-            Program.Wallet = wallet;
-
-            //修改密码CToolStripMenuItem.Enabled = Program.Wallet is Wallet;
-            交易TToolStripMenuItem.Enabled = Program.Wallet != null;
-            
-            //创建新地址NToolStripMenuItem.Enabled = Program.Wallet != null;
-            //导入私钥IToolStripMenuItem.Enabled = Program.Wallet != null;            
+               
         }
 
         private void AddAccount(WalletAccount account)
         {
             AccountFrm accountFrm = new AccountFrm(account);
             accountFrm.Parent = tabPage1;
-            accountFrm.Dock = DockStyle.Top;         
-        }
+            accountFrm.Dock = DockStyle.Top;            
+        }        
 
         private void 修改密码CToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -228,8 +228,8 @@ namespace Zoro_Client.UI
 
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            DateTime persistence_time = LocalNode.Root.Blockchain.Height.ToDateTime();
             Blockchain blockchain = LocalNode.Root.Blockchain;
+            DateTime persistence_time = blockchain.GetBlock(blockchain.GetBlockHash(blockchain.Height)).Timestamp.ToDateTime();
 
             lbl_height.Text = $"{blockchain.Height}/{blockchain.HeaderHeight}";
 
@@ -237,6 +237,7 @@ namespace Zoro_Client.UI
 
             TimeSpan persistence_span = DateTime.UtcNow - persistence_time;
             if (persistence_span < TimeSpan.Zero) persistence_span = TimeSpan.Zero;
+           
             if (persistence_span > Blockchain.TimePerBlock)
             {
                 toolStripProgressBar1.Style = ProgressBarStyle.Marquee;
@@ -246,12 +247,23 @@ namespace Zoro_Client.UI
                 toolStripProgressBar1.Value = persistence_span.Seconds;
                 toolStripProgressBar1.Style = ProgressBarStyle.Blocks;
             }
+
+            RefreshBalance();
+        }
+
+        private void RefreshBalance()
+        {
+            foreach(Control control in tabPage1.Controls)
+            {
+                if (control is AccountFrm)
+                {
+                    ((AccountFrm)control).RefreshBalance();
+                }
+            }
         }
 
         private void 退出XToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Program.MainService.OnStop();
-            ChangeWallet(null);
+        {           
             Close();
         }
 
@@ -259,7 +271,20 @@ namespace Zoro_Client.UI
         {
             Program.MainService.OnStop();
             ChangeWallet(null);
-            Close();
+        }
+
+        private void ContextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+            创建新地址NToolStripMenuItem.Enabled = Program.Wallet != null;
+            导入私钥IToolStripMenuItem.Enabled = Program.Wallet != null;
+        }
+
+        private void AddAssetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (AddAssetFrm addAssetFrm = new AddAssetFrm())
+            {
+                addAssetFrm.ShowDialog();
+            }
         }
     }
 }

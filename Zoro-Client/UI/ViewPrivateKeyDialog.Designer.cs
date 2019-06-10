@@ -54,7 +54,7 @@
             // 
             // button1
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.button1.BackColor = System.Drawing.Color.DodgerBlue;
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -62,10 +62,10 @@
             this.button1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.button1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.button1.Location = new System.Drawing.Point(543, 190);
+            this.button1.Location = new System.Drawing.Point(543, 189);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(87, 33);
+            this.button1.Size = new System.Drawing.Size(87, 25);
             this.button1.TabIndex = 9;
             this.button1.Text = "close";
             this.button1.UseVisualStyleBackColor = false;
@@ -174,7 +174,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(656, 232);
+            this.ClientSize = new System.Drawing.Size(656, 224);
             this.Controls.Add(this.tbxPublicKey);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tbxAddress);
@@ -188,7 +188,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ViewPrivateKeyDialog";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ViewPrivateKeyDialog";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

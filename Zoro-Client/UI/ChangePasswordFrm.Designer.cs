@@ -47,10 +47,10 @@
             this.button2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.button2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.button2.Location = new System.Drawing.Point(286, 107);
+            this.button2.Location = new System.Drawing.Point(286, 105);
             this.button2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(70, 31);
+            this.button2.Size = new System.Drawing.Size(70, 25);
             this.button2.TabIndex = 15;
             this.button2.Text = "Cancel";
             this.button2.UseVisualStyleBackColor = false;
@@ -65,10 +65,10 @@
             this.button1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.button1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.button1.Location = new System.Drawing.Point(193, 107);
+            this.button1.Location = new System.Drawing.Point(194, 105);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(70, 31);
+            this.button1.Size = new System.Drawing.Size(70, 25);
             this.button1.TabIndex = 14;
             this.button1.Text = "OK";
             this.button1.UseVisualStyleBackColor = false;
@@ -76,7 +76,7 @@
             // textBox3
             // 
             this.textBox3.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.textBox3.Location = new System.Drawing.Point(139, 76);
+            this.textBox3.Location = new System.Drawing.Point(139, 74);
             this.textBox3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(217, 23);
@@ -96,7 +96,7 @@
             // textBox2
             // 
             this.textBox2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.textBox2.Location = new System.Drawing.Point(139, 45);
+            this.textBox2.Location = new System.Drawing.Point(139, 43);
             this.textBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(217, 23);
@@ -116,7 +116,7 @@
             // textBox1
             // 
             this.textBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.textBox1.Location = new System.Drawing.Point(139, 14);
+            this.textBox1.Location = new System.Drawing.Point(139, 12);
             this.textBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(217, 23);
@@ -138,7 +138,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(381, 151);
+            this.ClientSize = new System.Drawing.Size(381, 140);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox3);
@@ -154,6 +154,7 @@
             this.Name = "ChangePasswordFrm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Change Password";
             this.ResumeLayout(false);
             this.PerformLayout();

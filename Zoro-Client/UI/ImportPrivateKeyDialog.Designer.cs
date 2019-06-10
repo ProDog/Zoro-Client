@@ -58,7 +58,6 @@
             this.textBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox1.Size = new System.Drawing.Size(549, 60);
             this.textBox1.TabIndex = 0;
             this.textBox1.WordWrap = false;
@@ -115,7 +114,7 @@
             this.MinimizeBox = false;
             this.Name = "ImportPrivateKeyDialog";
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ImportPrivateKeyDialog";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

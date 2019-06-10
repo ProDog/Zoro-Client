@@ -217,6 +217,10 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Zoro, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Zoro-Block\Zoro-Cli-Dev\Zoro.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppChainService.cs" />
@@ -232,6 +236,12 @@
     </Compile>
     <Compile Include="UI\AccountFrm.Designer.cs">
       <DependentUpon>AccountFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AddAssetFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\AddAssetFrm.Designer.cs">
+      <DependentUpon>AddAssetFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\AppChainService.cs" />
     <Compile Include="UI\ChangePasswordFrm.cs">
@@ -286,6 +296,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\AccountFrm.resx">
       <DependentUpon>AccountFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\AddAssetFrm.resx">
+      <DependentUpon>AddAssetFrm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ChangePasswordFrm.resx">
       <DependentUpon>ChangePasswordFrm.cs</DependentUpon>
@@ -376,12 +389,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Zoro\Zoro\Zoro.csproj">
-      <Project>{55b61ef7-e752-4cd7-a022-455b6fa92ccb}</Project>
-      <Name>Zoro</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
