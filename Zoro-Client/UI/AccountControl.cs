@@ -16,16 +16,17 @@ using System.Drawing;
 
 namespace Zoro_Client.UI
 {
-    public partial class AccountFrm : UserControl
+    public partial class AccountControl : UserControl
     {
         public string Address;
         public WalletAccount Account;
         private RpcHandler handler = new RpcHandler();
-        public AccountFrm()
+
+        public AccountControl()
         {
             InitializeComponent();
         }
-        public AccountFrm(WalletAccount account)
+        public AccountControl(WalletAccount account)
         {
             InitializeComponent();
             Account = account;
@@ -42,8 +43,6 @@ namespace Zoro_Client.UI
         private void GetBalance()
         {
             Blockchain blockchain = LocalNode.Root.Blockchain;
-
-            UInt160 addressHash= ZoroHelper.GetPublicKeyHashFromAddress(Address);
             try
             {
                 UInt160 bcpAssetId = Genesis.BcpContractAddress;
@@ -51,7 +50,7 @@ namespace Zoro_Client.UI
 
                 using (ScriptBuilder sb = new ScriptBuilder())
                 {
-                    sb.EmitSysCall("Zoro.NativeNEP5.Call", "BalanceOf", bcpAssetId, addressHash);
+                    sb.EmitSysCall("Zoro.NativeNEP5.Call", "BalanceOf", bcpAssetId, Account.ScriptHash);
                     //sb.EmitSysCall("Zoro.NativeNEP5.Call", "Decimals", bcpAssetId);
 
                     //var script = sb.ToArray().ToHexString();
@@ -77,13 +76,13 @@ namespace Zoro_Client.UI
                     //var info = handler.Process("invokescript", _params);
                     var value = GetBalanceFromJson(json.ToString());
 
-                    lblBcp.Text = value;
+                    lblZoro.Text = value;
 
                 }
 
                 using (ScriptBuilder sb = new ScriptBuilder())
                 {
-                    sb.EmitSysCall("Zoro.NativeNEP5.Call", "BalanceOf", bctAssetId, addressHash);
+                    sb.EmitSysCall("Zoro.NativeNEP5.Call", "BalanceOf", bctAssetId, Account.ScriptHash);
                     //sb.EmitSysCall("Zoro.NativeNEP5.Call", "Decimals", bctAssetId);
 
                     //var script = sb.ToArray().ToHexString();
@@ -175,8 +174,22 @@ namespace Zoro_Client.UI
             {
                 dialog.ShowDialog();
             }
+        }     
+
+        private void AccountFrm_Enter(object sender, EventArgs e)
+        {
+            this.BackColor = Color.Cyan;
+        }                
+
+        private void AccountFrm_MouseEnter(object sender, MouseEventArgs e)
+        {
+            this.BackColor = Color.Cyan;
         }
 
+        private void AccountFrm_MouseLeave(object sender, EventArgs e)
+        {
+            this.BackColor = Color.White;
+        }
     }
 
 }

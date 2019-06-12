@@ -231,11 +231,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="UI\AccountFrm.cs">
+    <Compile Include="UI\AccountControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\AccountFrm.Designer.cs">
-      <DependentUpon>AccountFrm.cs</DependentUpon>
+    <Compile Include="UI\AccountControl.Designer.cs">
+      <DependentUpon>AccountControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\AddAssetFrm.cs">
       <SubType>Form</SubType>
@@ -244,6 +244,12 @@
       <DependentUpon>AddAssetFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\AppChainService.cs" />
+    <Compile Include="UI\AssetControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\AssetControl.Designer.cs">
+      <DependentUpon>AssetControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\ChangePasswordFrm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -294,11 +300,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\AccountFrm.resx">
-      <DependentUpon>AccountFrm.cs</DependentUpon>
+    <EmbeddedResource Include="UI\AccountControl.resx">
+      <DependentUpon>AccountControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\AddAssetFrm.resx">
       <DependentUpon>AddAssetFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\AssetControl.resx">
+      <DependentUpon>AssetControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ChangePasswordFrm.resx">
       <DependentUpon>ChangePasswordFrm.cs</DependentUpon>

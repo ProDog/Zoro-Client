@@ -22,9 +22,16 @@ namespace Zoro_Client.UI
 
         private void BtnOK_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(textBox1.Text)) return;
             Settings.Default.NEP5Watched.Clear();
-            Settings.Default.NEP5Watched.AddRange(textBox1.Lines.Where(p => !string.IsNullOrWhiteSpace(p) && UInt160.TryParse(p, out _)).ToArray());
-            Settings.Default.Save();
+            foreach (var p in textBox1.Lines)
+            {
+                if (!Settings.Default.NEP5Watched.OfType<string>().ToArray().Contains(p))
+                {
+                    Settings.Default.NEP5Watched.Add(p);
+                    Settings.Default.Save();
+                }
+            }
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)

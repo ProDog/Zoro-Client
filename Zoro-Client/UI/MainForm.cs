@@ -113,10 +113,24 @@ namespace Zoro_Client.UI
 
         private void AddAccount(WalletAccount account)
         {
-            AccountFrm accountFrm = new AccountFrm(account);
-            accountFrm.Parent = tabPage1;
-            accountFrm.Dock = DockStyle.Top;            
-        }        
+            AccountControl accountFrm = new AccountControl(account);
+            accountFrm.Parent = panel2;
+            accountFrm.Dock = DockStyle.Top;
+
+            foreach (string asset in Settings.Default.NEP5Watched)
+            {
+                AssetControl assetControl = new AssetControl(UInt160.Parse(asset), account);
+                if (assetControl.IsShow)
+                {
+                    assetControl.Parent = panel4;
+                    assetControl.Dock = DockStyle.Top;
+                }
+                else
+                {
+                    assetControl.Dispose();
+                }
+            }
+        }
 
         private void 修改密码CToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -238,26 +252,51 @@ namespace Zoro_Client.UI
             TimeSpan persistence_span = DateTime.UtcNow - persistence_time;
             if (persistence_span < TimeSpan.Zero) persistence_span = TimeSpan.Zero;
            
-            if (persistence_span > Blockchain.TimePerBlock)
-            {
+            //if (persistence_span > Blockchain.TimePerBlock)
+            //{
                 toolStripProgressBar1.Style = ProgressBarStyle.Marquee;
-            }
-            else
-            {
-                toolStripProgressBar1.Value = persistence_span.Seconds;
-                toolStripProgressBar1.Style = ProgressBarStyle.Blocks;
-            }
+            //}
+            //else
+            //{
+            //    toolStripProgressBar1.Value = persistence_span.Seconds;
+            //    toolStripProgressBar1.Style = ProgressBarStyle.Blocks;
+            //}
 
             RefreshBalance();
         }
 
         private void RefreshBalance()
         {
-            foreach(Control control in tabPage1.Controls)
+            foreach(Control control in panel2.Controls)
             {
-                if (control is AccountFrm)
+                if (control is AccountControl)
                 {
-                    ((AccountFrm)control).RefreshBalance();
+                    ((AccountControl)control).RefreshBalance();
+                }
+            }
+
+            foreach (Control control in panel4.Controls)
+            {
+                if (control is AssetControl)
+                {
+                    ((AssetControl)control).RefreshBalance();
+                }
+            }
+        }
+
+        public void RefreshAsset(string asset)
+        {
+            foreach (WalletAccount account in Program.Wallet.GetAccounts())
+            {
+                AssetControl assetControl = new AssetControl(UInt160.Parse(asset), account);
+                if (assetControl.IsShow)
+                {
+                    assetControl.Parent = panel4;
+                    assetControl.Dock = DockStyle.Top;
+                }
+                else
+                {
+                    assetControl.Dispose();
                 }
             }
         }
@@ -283,7 +322,12 @@ namespace Zoro_Client.UI
         {
             using (AddAssetFrm addAssetFrm = new AddAssetFrm())
             {
-                addAssetFrm.ShowDialog();
+                if (addAssetFrm.ShowDialog() != DialogResult.OK) return;
+                panel4.Controls.Clear();
+                foreach (string asset in Settings.Default.NEP5Watched.OfType<string>().ToArray())
+                {
+                    RefreshAsset(asset);
+                }
             }
         }
     }
