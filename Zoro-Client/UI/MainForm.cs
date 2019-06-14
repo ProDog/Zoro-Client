@@ -87,7 +87,6 @@ namespace Zoro_Client.UI
                 Program.Wallet = nep6wallet;
 
                 //修改密码CToolStripMenuItem.Enabled = Program.Wallet is Wallet;
-                交易TToolStripMenuItem.Enabled = Program.Wallet != null; 
 
                 SplashScreen.Close();
             }
@@ -96,7 +95,7 @@ namespace Zoro_Client.UI
         private void ChangeWallet(Wallet wallet)
         {
             if (Program.Wallet != null)
-                tabPage1.Controls.Clear();
+                panel2.Controls.Clear();
 
             if (wallet != null)
             {
@@ -108,7 +107,6 @@ namespace Zoro_Client.UI
                 if (wallet is IDisposable disposable)
                     disposable.Dispose();
             }
-               
         }
 
         private void AddAccount(WalletAccount account)
@@ -116,6 +114,7 @@ namespace Zoro_Client.UI
             AccountControl accountFrm = new AccountControl(account);
             accountFrm.Parent = panel2;
             accountFrm.Dock = DockStyle.Top;
+            accountFrm.Show();
 
             foreach (string asset in Settings.Default.NEP5Watched)
             {

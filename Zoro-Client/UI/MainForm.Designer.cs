@@ -49,11 +49,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.退出XToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.交易TToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.转账TToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.交易TToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.签名SToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addAssetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助HToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.查看帮助VToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,6 +79,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.publishContractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.invokeContractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -192,7 +191,7 @@
             this.menuStrip1.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.钱包WToolStripMenuItem,
-            this.交易TToolStripMenuItem,
+            this.contractToolStripMenuItem,
             this.addAssetToolStripMenuItem,
             this.帮助HToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -246,40 +245,14 @@
             this.退出XToolStripMenuItem.Text = "E&xit";
             this.退出XToolStripMenuItem.Click += new System.EventHandler(this.退出XToolStripMenuItem_Click);
             // 
-            // 交易TToolStripMenuItem
+            // contractToolStripMenuItem
             // 
-            this.交易TToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.转账TToolStripMenuItem,
-            this.交易TToolStripMenuItem1,
-            this.toolStripSeparator5,
-            this.签名SToolStripMenuItem});
-            this.交易TToolStripMenuItem.Enabled = false;
-            this.交易TToolStripMenuItem.Name = "交易TToolStripMenuItem";
-            this.交易TToolStripMenuItem.Size = new System.Drawing.Size(87, 21);
-            this.交易TToolStripMenuItem.Text = "&Transaction";
-            // 
-            // 转账TToolStripMenuItem
-            // 
-            this.转账TToolStripMenuItem.Name = "转账TToolStripMenuItem";
-            this.转账TToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.转账TToolStripMenuItem.Text = "&Transfer...";
-            // 
-            // 交易TToolStripMenuItem1
-            // 
-            this.交易TToolStripMenuItem1.Name = "交易TToolStripMenuItem1";
-            this.交易TToolStripMenuItem1.Size = new System.Drawing.Size(174, 22);
-            this.交易TToolStripMenuItem1.Text = "Transactions(&X)...";
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(171, 6);
-            // 
-            // 签名SToolStripMenuItem
-            // 
-            this.签名SToolStripMenuItem.Name = "签名SToolStripMenuItem";
-            this.签名SToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.签名SToolStripMenuItem.Text = "&Signature...";
+            this.contractToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.publishContractToolStripMenuItem,
+            this.invokeContractToolStripMenuItem});
+            this.contractToolStripMenuItem.Name = "contractToolStripMenuItem";
+            this.contractToolStripMenuItem.Size = new System.Drawing.Size(69, 21);
+            this.contractToolStripMenuItem.Text = "Contract";
             // 
             // addAssetToolStripMenuItem
             // 
@@ -338,6 +311,7 @@
             // 
             // contextMenuStrip1
             // 
+            this.contextMenuStrip1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.创建新地址NToolStripMenuItem,
             this.导入私钥IToolStripMenuItem});
@@ -525,6 +499,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tabControl1.Location = new System.Drawing.Point(0, 29);
@@ -533,6 +508,28 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(883, 416);
             this.tabControl1.TabIndex = 5;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 26);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(875, 386);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Trans";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // publishContractToolStripMenuItem
+            // 
+            this.publishContractToolStripMenuItem.Name = "publishContractToolStripMenuItem";
+            this.publishContractToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.publishContractToolStripMenuItem.Text = "Publish Contract";
+            // 
+            // invokeContractToolStripMenuItem
+            // 
+            this.invokeContractToolStripMenuItem.Name = "invokeContractToolStripMenuItem";
+            this.invokeContractToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.invokeContractToolStripMenuItem.Text = "Invoke Contract";
             // 
             // MainForm
             // 
@@ -590,11 +587,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem 退出XToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 交易TToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 转账TToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 交易TToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripMenuItem 签名SToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 帮助HToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 查看帮助VToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 官网WToolStripMenuItem;
@@ -624,6 +616,10 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ToolStripMenuItem contractToolStripMenuItem;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.ToolStripMenuItem publishContractToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem invokeContractToolStripMenuItem;
     }
 }
 

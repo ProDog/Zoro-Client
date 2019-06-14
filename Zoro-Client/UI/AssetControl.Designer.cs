@@ -90,6 +90,7 @@
             this.btnTransfer.TabIndex = 29;
             this.btnTransfer.Text = "Transfer";
             this.btnTransfer.UseVisualStyleBackColor = false;
+            this.btnTransfer.Click += new System.EventHandler(this.BtnTransfer_Click);
             // 
             // tableLayoutPanel1
             // 

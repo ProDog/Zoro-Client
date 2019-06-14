@@ -289,6 +289,12 @@
       <DependentUpon>OpenWalletDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\SplashScreen.cs" />
+    <Compile Include="UI\TransferFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\TransferFrm.Designer.cs">
+      <DependentUpon>TransferFrm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\ViewPrivateKeyDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -336,6 +342,9 @@
     </Compile>
     <EmbeddedResource Include="UI\OpenWalletDialog.resx">
       <DependentUpon>OpenWalletDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\TransferFrm.resx">
+      <DependentUpon>TransferFrm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ViewPrivateKeyDialog.resx">
       <DependentUpon>ViewPrivateKeyDialog.cs</DependentUpon>

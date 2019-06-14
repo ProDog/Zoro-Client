@@ -22,6 +22,8 @@ namespace Zoro_Client.UI
         public bool IsShow = false;
         private WalletAccount Account;
         private UInt160 AssetHash;
+        private string AssetSymbol;
+        private int Decimals;
 
         public AssetControl()
         {
@@ -77,9 +79,18 @@ namespace Zoro_Client.UI
 
                         Account = account;
                         AssetHash = assetHash;
+                        AssetSymbol = symbol;
+                        Decimals = int.Parse(decimals);
                     }
                 }
             }
+        }
+
+        private void BtnTransfer_Click(object sender, EventArgs e)
+        {
+            TransferFrm transferFrm = new TransferFrm(Account, AssetHash.ToString(), AssetSymbol, Decimals);
+            transferFrm.Show();
+            transferFrm.TopMost = true;
         }
     }
 }

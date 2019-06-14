@@ -138,6 +138,7 @@
             this.btnTransferZoro.TabIndex = 30;
             this.btnTransferZoro.Text = "Transfer";
             this.btnTransferZoro.UseVisualStyleBackColor = false;
+            this.btnTransferZoro.Click += new System.EventHandler(this.BtnTransferZoro_Click);
             // 
             // btnTransferBct
             // 
@@ -154,6 +155,7 @@
             this.btnTransferBct.TabIndex = 31;
             this.btnTransferBct.Text = "Transfer";
             this.btnTransferBct.UseVisualStyleBackColor = false;
+            this.btnTransferBct.Click += new System.EventHandler(this.BtnTransferBct_Click);
             // 
             // tableLayoutPanel1
             // 

@@ -111,7 +111,7 @@ namespace Zoro_Client.UI
                     lblBct.Text = value;
 
                 }
-               
+
             }
             catch (Exception ex)
             {
@@ -140,7 +140,7 @@ namespace Zoro_Client.UI
         }
 
         private void 查看私钥VToolStripMenuItem_Click(object sender, EventArgs e)
-        {            
+        {
             using (ViewPrivateKeyDialog dialog = new ViewPrivateKeyDialog(Account))
             {
                 dialog.ShowDialog();
@@ -162,11 +162,11 @@ namespace Zoro_Client.UI
                 return;
 
             Program.Wallet.DeleteAccount(Account.ScriptHash);
-            
+
             if (Program.Wallet is NEP6Wallet wallet)
                 wallet.Save();
             this.Dispose();
-        }               
+        }
 
         private void AccountFrm_DoubleClick(object sender, EventArgs e)
         {
@@ -174,12 +174,12 @@ namespace Zoro_Client.UI
             {
                 dialog.ShowDialog();
             }
-        }     
+        }
 
         private void AccountFrm_Enter(object sender, EventArgs e)
         {
             this.BackColor = Color.Cyan;
-        }                
+        }
 
         private void AccountFrm_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -190,6 +190,19 @@ namespace Zoro_Client.UI
         {
             this.BackColor = Color.White;
         }
-    }
 
+        private void BtnTransferZoro_Click(object sender, EventArgs e)
+        {
+            TransferFrm transferFrm = new TransferFrm(Account, "0x0000000000000000000000000000000000000001", "ZORO", 8);
+            transferFrm.Show();
+            transferFrm.TopMost = true;
+        }
+
+        private void BtnTransferBct_Click(object sender, EventArgs e)
+        {
+            TransferFrm transferFrm = new TransferFrm(Account, "0x0000000000000000000000000000000000000002", "BCT", 8);
+            transferFrm.Show();
+            transferFrm.TopMost = true;
+        }
+    }
 }
